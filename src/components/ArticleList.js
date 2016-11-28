@@ -1,5 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import Article from './Article';
+
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
 import DayPicker, { DateUtils } from "react-day-picker";
 import '../css/DayPicker.css';
 
@@ -11,8 +15,15 @@ class ArticleList extends Component {
 	}
 
 	state = {
+		selectedArticles: null,
 		selectedDays: DateUtils.addDayToRange(new Date('2016-01-05'), {	to: new Date('2016-01-07')})
 	};
+
+	handleSelectchange = selectedArticles => {
+		this.setState({
+			selectedArticles
+		});
+	}
 
 	handleDayClick = (e, day) => {
 		const { selectedDays } = this.state;
@@ -21,10 +32,17 @@ class ArticleList extends Component {
             selectedDays: range
         });
     }
+
 	render() {
 		const { articles } = this.props;
 		const articleList = articles.map(article => <Article article = { article } key = { article.id } />);
-		const { selectedDays } = this.state;
+
+		const selectOptions = articles.map(article => ({
+			label: article.title,
+			value: article.id
+		}));
+
+		const { selectedArticles, selectedDays } = this.state;
 		const { from, to } = selectedDays;
 
 		return (
@@ -36,6 +54,12 @@ class ArticleList extends Component {
 					<span> по </span>
 					<time dateTime={ to ? to.toISOString() : '' }>{ to ? to.toLocaleString('ru-RU', dateOptions) : '' }</time>
 				</div>
+				<Select
+					options={selectOptions}
+					value={selectedArticles}
+					onChange={this.handleSelectchange}
+					multi={true}
+				/>
 				<DayPicker
 					numberOfMonths={3}
 					firstDayOfWeek={1}
