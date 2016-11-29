@@ -7,43 +7,45 @@ import 'react-select/dist/react-select.css';
 import DayPicker, { DateUtils } from "react-day-picker";
 import '../css/DayPicker.css';
 
+import changeFilters from '../AC/filters';
+
 const dateOptions = {day: 'numeric', month: 'long', year: 'numeric'};
 
 @connect (
-	({articles}) => ({articles})
+	({articles, filters}) => ({articles, filters}),
+	{changeFilters}
 )
 class Filters extends Component {
 	static propTypes = {
-		articles: PropTypes.array.isRequired
+		articles: PropTypes.array.isRequired,
+		filters: PropTypes.object.isRequired,
+		changeFilters: PropTypes.func.isRequired,
 	}
 
-	state = {
-		selectedArticles: null,
-		selectedDays: DateUtils.addDayToRange(new Date('2016-01-05'), {	to: new Date('2016-01-07')})
-	};
-
 	handleSelectchange = selectedArticles => {
-		this.setState({
+		const { changeFilters } = this.props;
+		changeFilters({
 			selectedArticles
 		});
 	}
 
 	handleDayClick = (e, day) => {
-		const { selectedDays } = this.state;
+		const { filters, changeFilters } = this.props;
+		const { selectedDays } = filters;
 		const range = DateUtils.addDayToRange(day, selectedDays);
-		this.setState({
-            selectedDays: range
-        });
-    }
+		changeFilters({
+			selectedDays: range
+		});
+	}
 
 	render() {
-		const { articles } = this.props;
+		const { articles, filters } = this.props;
 		const selectOptions = articles.map(article => ({
 			label: article.title,
 			value: article.id
 		}));
 
-		const { selectedArticles, selectedDays } = this.state;
+		const { selectedArticles, selectedDays } = filters;
 		const { from, to } = selectedDays;
 
 		return (
