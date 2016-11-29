@@ -1,5 +1,6 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
+var FlowtypePlugin = require('flowtype-loader/plugin');
 
 module.exports = {
     devtool: 'source-map',
@@ -19,6 +20,13 @@ module.exports = {
         }]
     },
     module: {
+        preLoaders: [
+            {
+                test: /\.jsx?$/,
+                loader: "flowtype",
+                exclude: /node_modules/
+            }
+        ],
         loaders: [
             {
                 test: /\.jsx?/,
@@ -30,5 +38,8 @@ module.exports = {
                 loader: 'style-loader!css-loader'
             }
         ]
-    }
-}
+    },
+    plugins: [
+        new FlowtypePlugin()
+    ]
+};
