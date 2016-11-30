@@ -1,5 +1,5 @@
 import { DELETE_ARTICLE } from '../constants';
-import { articles as initialArticles } from '../fixtures';
+import { normalizedArticles as initialArticles } from '../fixtures';
 
 function articlesReducer(articles = initialArticles, action) {
 	const { type, data } = action;

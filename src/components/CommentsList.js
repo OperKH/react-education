@@ -1,7 +1,18 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Comment from './Comment';
 
+
+@connect (
+	(state, props) => ({
+		comments: state.comments.filter(comment => props.comments.includes(comment.id))
+	})
+)
 class CommentsList extends Component {
+	static propTypes = {
+		comments: PropTypes.array.isRequired
+	}
+
 	render() {
 		const { comments } = this.props;
 
