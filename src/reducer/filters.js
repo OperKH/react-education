@@ -4,8 +4,8 @@ import { CHANGE_FILTERS } from '../constants';
 
 
 const defaultFilters = {
-	selectedArticles: null,
-	selectedDays: DateUtils.addDayToRange(new Date('2016-01-05'), {	to: new Date('2016-01-07')})
+	selectedArticles: [],
+	selectedDays: DateUtils.addDayToRange(null)
 };
 
 function filtersReducer(filters = defaultFilters, action) {

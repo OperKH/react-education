@@ -65,7 +65,7 @@ class Filters extends Component {
 				<DayPicker
 					numberOfMonths={3}
 					firstDayOfWeek={1}
-					initialMonth={ selectedDays.from }
+					initialMonth={ from ? from : new Date() }
 					selectedDays={day => DateUtils.isDayInRange(day, selectedDays)}
 					onDayClick={this.handleDayClick}
 					weekdaysShort={ ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'] }
