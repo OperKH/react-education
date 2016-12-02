@@ -6,3 +6,7 @@ export function filterArticles(articles, filters) {
 		.filter( ({date}) => (!from || Date.parse(date) > from) && (!to || Date.parse(date) < to) )
 		;
 }
+
+export function randomId() {
+	return Math.round(Math.random() * 0xffffffffffffffff).toString(36);
+}

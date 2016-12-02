@@ -32,14 +32,14 @@ class Article extends Component {
 	}
 
 	render() {
-		const { article: { title , text, comments, date } } = this.props;
+		const { article: { title , text, comments, date, id } } = this.props;
 		const { isOpen } = this.state;
 
 		const body = isOpen ?
 			<div className="body">
 				<time dateTime={ date }>{ (new Date(date)).toLocaleString('ru-RU', dateOptions) }</time>
 				<div className="article-text">{ text }</div>
-				<CommentsList comments = { comments || [] } />
+				<CommentsList comments = { comments || [] } articleID = {id} />
 			</div>
 			: null;
 		return (
